@@ -1,6 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../db.js';
-import User from './User.js';
+import User from './user.js';
 
 class Transaction extends Model {}
 
@@ -12,12 +12,14 @@ Transaction.init(
             primaryKey: true,
         },
         user_id: {
-            type: DataTypes.STRING,
+            type: DataTypes.UUID, // ⚠️ ALTERADO para UUID
             allowNull: false,
             references: {
                 model: 'User',
                 key: 'id',
             },
+            onUpdate: 'CASCADE',
+            onDelete: 'CASCADE',
         },
         name: {
             type: DataTypes.STRING(50),
@@ -39,10 +41,11 @@ Transaction.init(
     {
         sequelize,
         modelName: 'Transaction',
+        tableName: 'Transactions',
     },
 );
 
-//Definir relacionamento entre User e Transaction
+// Relacionamento entre User e Transaction
 User.hasMany(Transaction, { foreignKey: 'user_id', as: 'transactions' });
 Transaction.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
 

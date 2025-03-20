@@ -6,7 +6,8 @@ class User extends Model {}
 User.init(
     {
         id: {
-            type: DataTypes.STRING,
+            type: DataTypes.UUID, // ⚠️ ALTERADO para UUID
+            defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
         },
         first_name: {
@@ -30,7 +31,7 @@ User.init(
     {
         sequelize,
         modelName: 'User',
-        tableName: 'User', // Mantém o nome correto da tabela
+        tableName: 'User',
     },
 );
 

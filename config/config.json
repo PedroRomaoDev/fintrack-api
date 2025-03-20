@@ -1,0 +1,24 @@
+{
+  "development": {
+    "username": "root",
+    "password": "pedro2012",
+    "database": "fintrack-api",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "root",
+    "password": "pedro2012",
+    "database": "fintrack-api_test",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "root",
+    "password": "pedro2012",
+    "database": "fintrack-api_production",
+    "host": "localhost",
+    "dialect": "postgres"
+  }
+}
+

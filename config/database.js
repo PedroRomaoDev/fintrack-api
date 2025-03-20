@@ -1,6 +1,5 @@
-/* eslint-disable no-undef */
 import 'dotenv/config';
-
+import process from 'process';
 export default {
     development: {
         username: process.env.POSTGRES_USER,
@@ -9,5 +8,6 @@ export default {
         host: process.env.POSTGRES_HOST,
         port: process.env.POSTGRES_PORT,
         dialect: 'postgres',
+        logging: false,
     },
 };
