@@ -9,6 +9,6 @@ services:
             POSTGRES_USER: root
             POSTGRES_DB: fintrack-api
         ports:
-            - '5432:5432'
+            - '5432:5433'
         volumes:
             - ./.postgres-data:/var/lib/postgresql/data
