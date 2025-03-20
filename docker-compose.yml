@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+    postgres:
+        image: postgres
+        container_name: fintrack-api-postgres
+        environment:
+            POSTGRES_PASSWORD: senha
+            POSTGRES_USER: root
+            POSTGRES_DB: fintrack-api
+        ports:
+            - '5432:5432'
+        volumes:
+            - ./.postgres-data:/var/lib/postgresql/data
