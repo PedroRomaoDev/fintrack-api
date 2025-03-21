@@ -5,7 +5,7 @@ services:
         image: postgres
         container_name: fintrack-api-postgres
         environment:
-            POSTGRES_PASSWORD: senha
+            POSTGRES_PASSWORD: pedro2012
             POSTGRES_USER: root
             POSTGRES_DB: fintrack-api
         ports:
