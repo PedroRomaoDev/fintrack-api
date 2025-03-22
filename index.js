@@ -1,10 +1,24 @@
 // RAIZ DO PROJETO
 import 'dotenv/config.js';
 import express from 'express';
+import sequelize from './db.js';
+import trasacoesRoutes from './src/routes/ofx-transacoes.routes.js';
 
 const app = express();
 
 app.use(express.json());
+
+async function testarConexao() {
+    try {
+        sequelize.authenticate();
+        console.log('Conexão estabelecida com banco de dados');
+    } catch (err) {
+        console.log('Erro ao conectar', err);
+    }
+}
+testarConexao();
+
+app.use('/api', trasacoesRoutes);
 
 // eslint-disable-next-line no-undef
 app.listen(process.env.PORT, () =>

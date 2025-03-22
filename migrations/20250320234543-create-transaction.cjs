@@ -1,15 +1,16 @@
-/** @type {import('sequelize-cli').Migration} */
-module.exports = {
+import { v4 as uuidv4 } from 'uuid';
+
+export default {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("Transaction", {
       id: {
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.literal('uuid_generate_v4()'),
+        type: Sequelize.UUID, // Usamos STRING para armazenar o UUID
         primaryKey: true,
         allowNull: false,
+        defaultValue: uuidv4() // Gera UUID v4
       },
       user_id: {
-        type: Sequelize.UUID, // Deve ser UUID para corresponder ao ID do User
+        type: Sequelize.STRING, // UUID em formato STRING
         allowNull: false,
         references: {
           model: "User", // Nome da tabela de referência

@@ -1,12 +1,13 @@
-/** @type {import('sequelize-cli').Migration} */
-module.exports = {
+import { v4 as uuidv4 } from 'uuid';
+
+export default {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("User", {
       id: {
-        type: Sequelize.UUID,  // Define o ID como UUID
-        defaultValue: Sequelize.literal('uuid_generate_v4()'), // Gera UUID automaticamente
+        type: Sequelize.UUID, // Usamos STRING para armazenar o UUID
         primaryKey: true,
         allowNull: false,
+        defaultValue: uuidv4() // Gera UUID v4
       },
       first_name: {
         type: Sequelize.STRING,
@@ -25,6 +26,16 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      createdAt: {
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        allowNull: false,
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        allowNull: false,
+      }
     });
   },
 
