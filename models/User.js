@@ -32,6 +32,7 @@ User.init(
         sequelize,
         modelName: 'User',
         tableName: 'User',
+        timestamps: true, //Criar colunas de data de criação a atualização
     },
 );
 

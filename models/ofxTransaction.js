@@ -59,6 +59,7 @@ OfxTransacao.init(
         sequelize,
         modelName: 'OfxTransacao',
         tableName: 'OfxTransacao',
+        timestamps: true, //Criar colunas de data de criação a atualização
     },
 );
 

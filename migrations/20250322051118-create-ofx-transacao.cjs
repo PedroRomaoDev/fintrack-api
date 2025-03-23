@@ -1,6 +1,6 @@
-import { v4 as uuidv4 } from 'uuid';
+const { v4: uuidv4 } = require('uuid');
 
-export default {
+module.exports = {
     async up(queryInterface, Sequelize) {
         await queryInterface.createTable('OfxTransacao', {
             trasacaoofx_id: {
@@ -10,7 +10,7 @@ export default {
                 defaultValue: uuidv4(), // Gera UUID v4
             },
             user_id: {
-                type: Sequelize.uuid, // UUID em formato STRING
+                type: Sequelize.UUID, // UUID em formato STRING
                 allowNull: false,
                 references: {
                     model: 'User', // A tabela 'User' precisa existir
@@ -49,6 +49,17 @@ export default {
                 defaultValue: false, // Valor padrão é 'false'
                 allowNull: false,
             },
+
+            createdAt: {
+                type: Sequelize.DATE,
+                allowNull: false,
+                defaultValue: Sequelize.NOW,  // Define o valor padrão para createdAt
+              },
+              updatedAt: {
+                type: Sequelize.DATE,
+                allowNull: false,
+                defaultValue: Sequelize.NOW,  // Define o valor padrão para updatedAt
+              },
         });
     },
 

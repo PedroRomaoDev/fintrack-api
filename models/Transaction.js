@@ -42,6 +42,7 @@ Transaction.init(
         sequelize,
         modelName: 'Transaction',
         tableName: 'Transactions',
+        timestamps: true, //Criar colunas de data de criação a atualização
     },
 );
 
