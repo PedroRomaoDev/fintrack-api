@@ -40,6 +40,7 @@ module.exports = {
     });
   },
 
+  // eslint-disable-next-line no-unused-vars
   down: async (queryInterface, Sequelize) => {
     // Reverte as alterações, removendo 'createdAt' e 'updatedAt' das tabelas
     await queryInterface.removeColumn('OfxTransacoes', 'createdAt');

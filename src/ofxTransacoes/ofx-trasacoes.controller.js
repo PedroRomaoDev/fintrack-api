@@ -1,8 +1,8 @@
-import ofxTrasacaoService from './ofx-transacoes.service.js';
+import ofxTransacaoService from './ofx-transacoes.service.js';
 
 const criarTransacaoOfx = async (req) => {
     console.log('Esse é o valor do req.body: ', req.body);
-    const novaTransacaoOfx = await ofxTrasacaoService.criarTransacaoOfx(
+    const novaTransacaoOfx = await ofxTransacaoService.criarTransacaoOfx(
         req.body,
     );
     return novaTransacaoOfx;
@@ -11,7 +11,7 @@ const criarTransacaoOfx = async (req) => {
 const buscarOfxTransacoesDoUsuario = async (req, res) => {
     try {
         const transacoes =
-            await ofxTrasacaoService.listarTodasTransacoesDoUsuario(
+            await ofxTransacaoService.listarTodasTransacoesDoUsuario(
                 req.params.userId,
             );
 

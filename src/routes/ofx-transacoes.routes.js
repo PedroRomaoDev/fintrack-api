@@ -1,6 +1,6 @@
 import express from 'express';
 const routes = express.Router();
-import OfxTransacaoController from '../OfxTransacoes/ofx-trasacoes.controller.js';
+import OfxTransacaoController from '../ofxTransacoes/ofx-trasacoes.controller.js';
 
 routes.post('/ofxtransacoes', OfxTransacaoController.criarTransacaoOfx);
 

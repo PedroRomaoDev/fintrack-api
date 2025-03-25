@@ -1,7 +1,7 @@
 // RAIZ DO PROJETO
 import 'dotenv/config.js';
 import express from 'express';
-import sequelize from './db.js';
+import sequelize from './config/db.js';
 import trasacoesRoutes from './src/routes/ofx-transacoes.routes.js';
 import usuarioRoutes from './src/routes/usuario.routes.js';
 
