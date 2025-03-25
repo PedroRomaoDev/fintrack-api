@@ -6,6 +6,7 @@ import 'dotenv/config.js';
 import {
     makeGetUserByIdController,
     makeCreateUserController,
+    makeUpdateUserController,
 } from './src/factories/controllers/user.js';
 
 const app = express();
@@ -34,6 +35,14 @@ app.get('/api/users/:userId', async (request, response) => {
     const getUserByIdController = makeGetUserByIdController();
 
     const { statusCode, body } = await getUserByIdController.execute(request);
+
+    response.status(statusCode).send(body);
+});
+
+app.patch('/api/users/:userId', async (request, response) => {
+    const updateUserController = makeUpdateUserController();
+
+    const { statusCode, body } = await updateUserController.execute(request);
 
     response.status(statusCode).send(body);
 });
