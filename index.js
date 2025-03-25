@@ -3,7 +3,10 @@ import 'dotenv/config.js';
 import express from 'express';
 import sequelize from './config/db.js';
 import 'dotenv/config.js';
-import { makeCreateUserController } from './src/factories/controllers/user.js';
+import {
+    makeGetUserByIdController,
+    makeCreateUserController,
+} from './src/factories/controllers/user.js';
 
 const app = express();
 
@@ -26,6 +29,15 @@ app.post('/api/users', async (request, response) => {
 
     response.status(statusCode).send(body);
 });
+
+app.get('/api/users/:userId', async (request, response) => {
+    const getUserByIdController = makeGetUserByIdController();
+
+    const { statusCode, body } = await getUserByIdController.execute(request);
+
+    response.status(statusCode).send(body);
+});
+
 // eslint-disable-next-line no-undef
 app.listen(process.env.PORT, () =>
     // eslint-disable-next-line no-undef
