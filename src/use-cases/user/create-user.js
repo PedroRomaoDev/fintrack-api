@@ -1,12 +1,19 @@
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcrypt';
+import { EmailAlreadyInUseError } from '../../../errors/user.js';
 
 export class CreateUserUseCase {
     constructor(createUserRepository) {
         this.createUserRepository = createUserRepository;
     }
     async execute(createUserParams) {
-        //verificar se o email já está em uso (ainda nao consigo fazer)
+        //verificar se o email já está em uso
+        const userWithProviderEmail =
+            await this.getUserByEmailRepository.execute(createUserParams.email);
+
+        if (userWithProviderEmail) {
+            throw new EmailAlreadyInUseError(createUserParams.email);
+        }
 
         // gerar ID do usuario com UUID
         const userId = uuidv4();
