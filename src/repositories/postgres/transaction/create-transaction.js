@@ -1,6 +1,6 @@
 import OfxTransacao from '../../models/ofxTransaction.js';
 
-export class PostgreCreateTransactionRepository {
+export class PostgresCreateTransactionRepository {
     async execute(createTransactionParams) {
         return await OfxTransacao.create({
             user_id: createTransactionParams.user_id,
