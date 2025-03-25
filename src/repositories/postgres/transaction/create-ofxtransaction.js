@@ -1,4 +1,4 @@
-import OfxTransacao from '../../models/ofxTransaction.js';
+import OfxTransacao from '../../../../models/ofxTransaction.js';
 
 export class PostgresCreateTransactionRepository {
     async execute(createTransactionParams) {
