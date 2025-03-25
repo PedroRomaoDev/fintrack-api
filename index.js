@@ -2,8 +2,8 @@
 import 'dotenv/config.js';
 import express from 'express';
 import sequelize from './config/db.js';
-import trasacoesRoutes from './src/routes/ofx-transacoes.routes.js';
-import usuarioRoutes from './src/routes/usuario.routes.js';
+import 'dotenv/config.js';
+import { makeCreateUserController } from './src/factories/controllers/user.js';
 
 const app = express();
 
@@ -19,9 +19,13 @@ async function testarConexao() {
 }
 testarConexao();
 
-app.use('/api', trasacoesRoutes);
-app.use('/api', usuarioRoutes);
+app.post('/api/users', async (request, response) => {
+    const createUserController = makeCreateUserController();
 
+    const { statusCode, body } = await createUserController.execute(request);
+
+    response.status(statusCode).send(body);
+});
 // eslint-disable-next-line no-undef
 app.listen(process.env.PORT, () =>
     // eslint-disable-next-line no-undef
