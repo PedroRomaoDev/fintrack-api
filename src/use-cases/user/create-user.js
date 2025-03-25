@@ -3,10 +3,13 @@ import bcrypt from 'bcrypt';
 import { EmailAlreadyInUseError } from '../../../errors/user.js';
 
 export class CreateUserUseCase {
-    constructor(createUserRepository) {
+    constructor(createUserRepository, getUserByEmailRepository) {
         this.createUserRepository = createUserRepository;
+        this.getUserByEmailRepository = getUserByEmailRepository;
     }
     async execute(createUserParams) {
+        console.log('🔧 Dados recebidos no use case:', createUserParams); // Verificar se os dados chegaram aqui
+
         //verificar se o email já está em uso
         const userWithProviderEmail =
             await this.getUserByEmailRepository.execute(createUserParams.email);

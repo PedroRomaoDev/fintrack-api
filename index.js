@@ -2,7 +2,6 @@
 import 'dotenv/config.js';
 import express from 'express';
 import sequelize from './config/db.js';
-import 'dotenv/config.js';
 import {
     makeGetUserByIdController,
     makeCreateUserController,

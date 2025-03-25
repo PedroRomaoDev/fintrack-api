@@ -1,4 +1,4 @@
-import User from '../../models/user.js';
+import User from '../../models/User.js';
 import ServicesRoot from '../ServicesRoot/seguranca.service.js';
 
 const criarUsuario = async (body) => {
