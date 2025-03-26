@@ -1,32 +1,9 @@
 import {
-    PostgresGetUserByIdRepository,
     PostgresCreateUserRepository,
     PostgresGetUserByEmailRepository,
-    PostgresUpdateUserRepository,
-    PostgresDeleteUserRepository,
 } from '../../repositories/postgres/index.js';
-import {
-    GetUserByIdUseCase,
-    CreateUserUseCase,
-    UpdateUserUseCase,
-    DeleteUserUseCase,
-} from '../../use-cases/index.js';
-import {
-    GetUserByIdController,
-    CreateUserController,
-    UpdateUserController,
-    DeleteUserController,
-} from '../../controllers/index.js';
-
-export const makeGetUserByIdController = () => {
-    const getUserByIdRepository = new PostgresGetUserByIdRepository();
-
-    const getUserByIdUseCase = new GetUserByIdUseCase(getUserByIdRepository);
-
-    const getUserByIdController = new GetUserByIdController(getUserByIdUseCase);
-
-    return getUserByIdController;
-};
+import { CreateUserUseCase } from '../../use-cases/index.js';
+import { CreateUserController } from '../../controllers/index.js';
 
 export const makeCreateUserController = () => {
     const getUserByEmailRepository = new PostgresGetUserByEmailRepository();
@@ -40,30 +17,8 @@ export const makeCreateUserController = () => {
 
     const createUserController = new CreateUserController(createUserUseCase);
 
+    // Log para verificar se o controlador foi criado corretamente
+    console.log('CreateUserController criado com sucesso');
+
     return createUserController;
-};
-
-export const makeUpdateUserController = () => {
-    const getUserByEmailRepository = new PostgresGetUserByEmailRepository();
-
-    const updateUserRepository = new PostgresUpdateUserRepository();
-
-    const updateUserUseCase = new UpdateUserUseCase(
-        getUserByEmailRepository,
-        updateUserRepository,
-    );
-
-    const updateUserController = new UpdateUserController(updateUserUseCase);
-
-    return updateUserController;
-};
-
-export const makeDeleteUserController = () => {
-    const deleteUserRepository = new PostgresDeleteUserRepository();
-
-    const deleteUserUseCase = new DeleteUserUseCase(deleteUserRepository);
-
-    const deleteUserController = new DeleteUserController(deleteUserUseCase);
-
-    return deleteUserController;
 };

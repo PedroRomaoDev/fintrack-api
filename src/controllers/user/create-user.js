@@ -11,6 +11,7 @@ export class CreateUserController {
         try {
             const params = httpRequest.body;
 
+            console.log('Dados recebidos na requisição:', httpRequest.body);
             await createUserSchema.parseAsync(params);
 
             const createdUser = await this.createUserUseCase.execute(params);

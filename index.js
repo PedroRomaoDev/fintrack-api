@@ -2,55 +2,29 @@
 import 'dotenv/config.js';
 import express from 'express';
 import sequelize from './config/db.js';
-import {
-    makeGetUserByIdController,
-    makeCreateUserController,
-    makeUpdateUserController,
-    makeDeleteUserController,
-} from './src/factories/controllers/user.js';
-
-const app = express();
-
-app.use(express.json());
+import { makeCreateUserController } from './src/factories/controllers/user.js';
 //
 async function testarConexao() {
     try {
-        sequelize.authenticate();
+        await sequelize.authenticate(); // Adicionei o `await` aqui
         console.log('Conexão estabelecida com banco de dados');
     } catch (err) {
         console.log('Erro ao conectar', err);
     }
 }
+
 testarConexao();
+
+const app = express();
+
+app.use(express.json());
+
+app.use(express.urlencoded({ extended: true }));
 
 app.post('/api/users', async (request, response) => {
     const createUserController = makeCreateUserController();
 
     const { statusCode, body } = await createUserController.execute(request);
-
-    response.status(statusCode).send(body);
-});
-
-app.get('/api/users/:userId', async (request, response) => {
-    const getUserByIdController = makeGetUserByIdController();
-
-    const { statusCode, body } = await getUserByIdController.execute(request);
-
-    response.status(statusCode).send(body);
-});
-
-app.patch('/api/users/:userId', async (request, response) => {
-    const updateUserController = makeUpdateUserController();
-
-    const { statusCode, body } = await updateUserController.execute(request);
-
-    response.status(statusCode).send(body);
-});
-
-app.delete('/api/users/:userId', async (request, response) => {
-    const deleteUserController = makeDeleteUserController();
-
-    const { statusCode, body } = await deleteUserController.execute(request);
 
     response.status(statusCode).send(body);
 });
