@@ -3,39 +3,39 @@ import { z } from 'zod';
 export const createUserSchema = z.object({
     first_name: z
         .string({
-            required_error: 'O primeiro nome é obrigatório.',
+            required_error: 'First name is required',
         })
         .trim()
         .min(1, {
-            message: 'O primeiro nome é obrigatório.',
+            message: 'First name is required.',
         }),
     last_name: z
         .string({
-            required_error: 'O sobrenome é obrigatório.',
+            required_error: 'Last name is required.',
         })
         .trim()
         .min(1, {
-            message: 'O sobrenome é obrigatório.',
+            message: 'Last name is required.',
         }),
     email: z
         .string({
-            required_error: 'O e-mail é obrigatório.',
+            required_error: 'E-mail is required.',
         })
         .email({
-            message: 'Por favor, informe um e-mail válido.',
+            message: 'Please provide a valid email.',
         })
         .trim()
         .min(1),
     password: z
         .string({
-            required_error: 'A senha é obrigatória.',
+            required_error: 'Password is required.',
         })
-        .trim()
+        .trim({})
         .min(6, {
-            message: 'A senha deve ter pelo menos 6 caracteres.',
+            message: 'Password must have at least 6 characters.',
         }),
 });
 
 export const updateUserSchema = createUserSchema.partial().strict({
-    message: 'Algum dos campos fornecidos não é permitido.',
+    message: 'Some provided field is not allowed.',
 });
