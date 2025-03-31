@@ -1,7 +1,10 @@
 // RAIZ DO PROJETO
 import 'dotenv/config.js';
 import express from 'express';
-import { makeCreateUserController } from './src/factories/controllers/user.js';
+import {
+    makeCreateUserController,
+    makeGetUserByIdController,
+} from './src/factories/controllers/user.js';
 
 //
 
@@ -13,6 +16,14 @@ app.post('/api/users', async (request, response) => {
     const createUserController = makeCreateUserController();
 
     const { statusCode, body } = await createUserController.execute(request);
+
+    response.status(statusCode).send(body);
+});
+
+app.get('/api/users/:userId', async (request, response) => {
+    const getUserByIdController = makeGetUserByIdController();
+
+    const { statusCode, body } = await getUserByIdController.execute(request);
 
     response.status(statusCode).send(body);
 });
