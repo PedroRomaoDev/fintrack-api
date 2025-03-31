@@ -5,6 +5,7 @@ import {
     makeCreateUserController,
     makeGetUserByIdController,
     makeUpdateUserController,
+    makeDeleteUserController,
 } from './src/factories/controllers/user.js';
 
 //
@@ -33,6 +34,13 @@ app.patch('/api/users/:userId', async (request, response) => {
     const updateUserController = makeUpdateUserController();
 
     const { statusCode, body } = await updateUserController.execute(request);
+
+    response.status(statusCode).send(body);
+});
+app.delete('/api/users/:userId', async (request, response) => {
+    const deleteUserController = makeDeleteUserController();
+
+    const { statusCode, body } = await deleteUserController.execute(request);
 
     response.status(statusCode).send(body);
 });
