@@ -4,6 +4,7 @@ import express from 'express';
 import {
     makeCreateUserController,
     makeGetUserByIdController,
+    makeUpdateUserController,
 } from './src/factories/controllers/user.js';
 
 //
@@ -24,6 +25,14 @@ app.get('/api/users/:userId', async (request, response) => {
     const getUserByIdController = makeGetUserByIdController();
 
     const { statusCode, body } = await getUserByIdController.execute(request);
+
+    response.status(statusCode).send(body);
+});
+
+app.patch('/api/users/:userId', async (request, response) => {
+    const updateUserController = makeUpdateUserController();
+
+    const { statusCode, body } = await updateUserController.execute(request);
 
     response.status(statusCode).send(body);
 });
