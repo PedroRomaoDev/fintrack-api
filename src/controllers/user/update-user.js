@@ -2,7 +2,7 @@ import validator from 'validator';
 import { badRequest, ok, serverError } from '../helpers/index.js';
 import { EmailAlreadyInUseError } from '../../errors/user.js';
 import { invalidIdResponse } from '../helpers/index.js';
-import { updateUserSchema } from '../../../schemas/user.js';
+import { updateUserSchema } from '../../schemas/user.js';
 import { ZodError } from 'zod';
 
 export class UpdateUserController {

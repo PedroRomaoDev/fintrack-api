@@ -1,5 +1,5 @@
 import { serverError, created, badRequest } from '../helpers/index.js';
-import { createTransactionSchema } from '../../../schemas/index.js';
+import { createTransactionSchema } from '../../schemas/index.js';
 import { ZodError } from 'zod';
 
 export class CreateTransactionController {
