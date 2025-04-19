@@ -15,7 +15,7 @@ Fintrack API é a API de um sistema de controle de finanças pessoais, desenvolv
 
 ## 📁 Estrutura do Projeto
 
-A arquitetura segue os princípios da **Clean Architecture**, separando responsabilidades em camadas bem definidas:
+A arquitetura segue os princípios da **Clean Architecture**, **SOLID** e **Adapter Pattern**. Separando responsabilidades em camadas bem definidas:
 
 ```
 fintrack-api/
@@ -73,7 +73,7 @@ docker-compose up -d
 ### 6. Iniciar a aplicação
 
 ```bash
-npm run dev
+npm run start:dev
 ```
 
 ---
