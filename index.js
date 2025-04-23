@@ -11,6 +11,7 @@ import {
     makeCreateTransactionController,
     makeGetTransactionsByUserIdController,
     makeUpdateTransactionController,
+    makeDeleteTransactionController,
 } from './src/factories/controllers/transaction.js';
 import cors from 'cors';
 
@@ -78,6 +79,14 @@ app.patch('/api/transactions/:transactionId', async (request, response) => {
     const updateTransationController = makeUpdateTransactionController();
     const { statusCode, body } =
         await updateTransationController.execute(request);
+
+    response.status(statusCode).send(body);
+});
+
+app.delete('api/transactions/:transactionId', async (request, response) => {
+    const deleteTransactionController = makeDeleteTransactionController();
+    const { statusCode, body } =
+        await deleteTransactionController.execute(request);
 
     response.status(statusCode).send(body);
 });
