@@ -1,11 +1,16 @@
-import { v4 as uuidv4 } from 'uuid';
-import bcrypt from 'bcrypt';
 import { EmailAlreadyInUseError } from '../../errors/user.js';
 
 export class CreateUserUseCase {
-    constructor(getUserByEmailRepository, createUserRepository) {
+    constructor(
+        getUserByEmailRepository,
+        createUserRepository,
+        passwordHasherAdapter,
+        idGeneratorAdapter,
+    ) {
         this.getUserByEmailRepository = getUserByEmailRepository;
         this.createUserRepository = createUserRepository;
+        this.passwordHasherAdapter = passwordHasherAdapter;
+        this.idGeneratorAdapter = idGeneratorAdapter;
     }
     async execute(createUserParams) {
         //verificar se o email já está em uso
@@ -18,10 +23,12 @@ export class CreateUserUseCase {
         }
 
         //gerar ID do usuario com UUID
-        const userId = uuidv4();
+        const userId = this.idGeneratorAdapter.execute();
 
         //criptografar a senha com Bcrypt
-        const hashedPassword = await bcrypt.hash(createUserParams.password, 10);
+        const hashedPassword = await this.passwordHasherAdapter.execute(
+            createUserParams.password,
+        );
 
         //inserir usuario no banco de dados
         const user = {
