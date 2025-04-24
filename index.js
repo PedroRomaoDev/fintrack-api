@@ -6,6 +6,7 @@ import {
     makeGetUserByIdController,
     makeUpdateUserController,
     makeDeleteUserController,
+    makeGetUserBalanceController,
 } from './src/factories/controllers/user.js';
 import {
     makeCreateTransactionController,
@@ -88,6 +89,13 @@ app.delete('/api/transactions/:transactionId', async (request, response) => {
     const { statusCode, body } =
         await deleteTransactionController.execute(request);
 
+    response.status(statusCode).send(body);
+});
+
+app.get('/api/users/:userId/balance', async (request, response) => {
+    const getUserBalanceController = makeGetUserBalanceController();
+    const { statusCode, body } =
+        await getUserBalanceController.execute(request);
     response.status(statusCode).send(body);
 });
 
