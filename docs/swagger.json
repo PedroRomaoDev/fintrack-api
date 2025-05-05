@@ -317,6 +317,39 @@
                         }
                     }
                 }
+            },
+            "delete": {
+                "summary": "Deletar transação por ID",
+                "tags": ["Transação"],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "transactionId",
+                        "required": true,
+                        "type": "string",
+                        "description": "ID da transação a ser deletada"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Transação deletada com sucesso",
+                        "schema": {
+                            "$ref": "#/definitions/Transaction"
+                        }
+                    },
+                    "404": {
+                        "description": "Transação não encontrada",
+                        "schema": {
+                            "$ref": "#/definitions/TransactionNotFoundResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor",
+                        "schema": {
+                            "$ref": "#/definitions/InternalServerErrorResponse"
+                        }
+                    }
+                }
             }
         }
     },
