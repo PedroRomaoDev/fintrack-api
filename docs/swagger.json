@@ -287,6 +287,89 @@
                     "example": "5900"
                 }
             }
+        },
+        "Transaction": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "example": "e29ef739-ffae-45a8-a582-fb56f9660a12"
+                },
+                "user_id": {
+                    "type": "string",
+                    "example": "e29ef739-ffae-45a8-a582-fb56f9660a12"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Salary"
+                },
+                "amount": {
+                    "type": "string",
+                    "example": "100.00",
+                    "description": "EARNING, EXPENSE or INVESTMENT"
+                },
+                "type": {
+                    "type": "string",
+                    "example": "EARNING"
+                }
+            }
+        },
+        "CreateTransactionParams": {
+            "type": "object",
+            "properties": {
+                "user_id": {
+                    "type": "string",
+                    "example": "e29ef739-ffae-45a8-a582-fb56f9660a12"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Salary"
+                },
+                "amount": {
+                    "type": "number",
+                    "example": "100.00",
+                    "description": "EARNING, EXPENSE or INVESTMENT"
+                },
+                "date": {
+                    "type": "string",
+                    "example": "2020-01-01T00:00:00Z"
+                },
+                "type": {
+                    "type": "string",
+                    "example": "EARNING"
+                }
+            }
+        },
+        "UpdateTransactionParams": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "Salary"
+                },
+                "amount": {
+                    "type": "number",
+                    "example": "100.00",
+                    "description": "EARNING, EXPENSE or INVESTMENT"
+                },
+                "date": {
+                    "type": "string",
+                    "example": "2020-01-01T00:00:00Z"
+                },
+                "type": {
+                    "type": "string",
+                    "example": "EARNING"
+                }
+            }
+        },
+        "TransactionNotFoundResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "Transaction not found"
+                }
+            }
         }
     }
 }

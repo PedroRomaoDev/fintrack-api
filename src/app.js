@@ -20,3 +20,5 @@ const swaggerDocument = JSON.parse(
 );
 
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// Serve Swagger UI
+//localhost:8080/docs
