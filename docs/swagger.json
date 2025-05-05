@@ -1,83 +1,50 @@
 {
     "swagger": "2.0",
     "info": {
-      "title": "Fintrack | API Acadêmica para Gestão de Finanças",
-      "description": "A Fintrack API é a interface de comunicação backend do sistema de controle de finanças Fintrack, desenvolvida para um trabalho acadêmico das disciplinas de Teste de Software, Engenharia de Software e Programação Web. Esta API é responsável por gerenciar os dados dos usuários, transações financeiras, autenticação e regras de negócio do sistema.",
-      "version": "1.0.0"
+        "title": "Fintrack | API Acadêmica para Gestão de Finanças",
+        "description": "A Fintrack API é a interface de comunicação backend do sistema de controle de finanças Fintrack, desenvolvida para um trabalho acadêmico das disciplinas de Teste de Software, Engenharia de Software e Programação Web. Esta API é responsável por gerenciar os dados dos usuários, transações financeiras, autenticação e regras de negócio do sistema.",
+        "version": "1.0.0"
     },
     "paths": {
-      "/api/users": {
-        "post": {
-          "summary": "Criar um novo usuário",
-          "tags": ["Usuário"],
-          "parameters": [
-            {
-              "name": "body",
-              "required": true,
-              "in": "body",
-              "schema": {
-                "$ref": "#/definitions/CreateUserParams"
-              }
+        "/api/users": {
+            "post": {
+                "summary": "Criar um novo usuário",
+                "tags": ["Usuário"],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/CreateUserParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Usuário criado com sucesso",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    },
+                    "400": {
+                        "description": "Parâmetros inválidos",
+                        "schema": {
+                            "$ref": "#/definitions/InvalidParamsResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor",
+                        "schema": {
+                            "$ref": "#/definitions/InternalServerErrorResponse"
+                        }
+                    }
+                }
             }
-          ],
-          "responses": {
-            "201": {
-              "description": "Usuário criado com sucesso",
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
-            },
-            "400": {
-              "description": "Parâmetros inválidos",
-              "schema": {
-                "$ref": "#/definitions/InvalidParamsResponse"
-              }
-            },
-            "500": {
-              "description": "Erro interno do servidor",
-              "schema": {
-                "$ref": "#/definitions/InternalServerErrorResponse"
-              }
-            }
-          }
-        }
-      },
-      "/api/users/{userId}": {
-        "get": {
-          "summary": "Obter usuário por ID",
-          "tags": ["Usuário"],
-          "parameters": [
-            {
-              "in": "path",
-              "name": "userId",
-              "required": true,
-              "type": "string",
-              "description": "ID do usuário a ser obtido"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Usuário encontrado",
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
-            },
-            "404": {
-              "description": "Usuário não encontrado",
-              "schema": {
-                "$ref": "#/definitions/UserNotFoundResponse"
-              }
-            },
-            "500": {
-              "description": "Erro interno do servidor",
-              "schema": {
-                "$ref": "#/definitions/InternalServerErrorResponse"
-              }
-            }
-          }
         },
-        "delete": {
-                "summary": "Delete user by ID",
+        "/api/users/{userId}": {
+            "get": {
+                "summary": "Obter usuário por ID",
                 "tags": ["Usuário"],
                 "parameters": [
                     {
@@ -85,108 +52,138 @@
                         "name": "userId",
                         "required": true,
                         "type": "string",
-                        "description": "ID of the user to delete"
+                        "description": "ID do usuário a ser obtido"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "User deleted successfully",
+                        "description": "Usuário encontrado",
                         "schema": {
                             "$ref": "#/definitions/User"
                         }
                     },
                     "404": {
-                        "description": "User not found",
+                        "description": "Usuário não encontrado",
                         "schema": {
                             "$ref": "#/definitions/UserNotFoundResponse"
                         }
                     },
                     "500": {
-                        "description": "Internal server error",
+                        "description": "Erro interno do servidor",
+                        "schema": {
+                            "$ref": "#/definitions/InternalServerErrorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Excluir usuário por ID",
+                "tags": ["Usuário"],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "userId",
+                        "required": true,
+                        "type": "string",
+                        "description": "ID do usuário a ser excluído"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuário excluído com sucesso",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    },
+                    "404": {
+                        "description": "Usuário não encontrado",
+                        "schema": {
+                            "$ref": "#/definitions/UserNotFoundResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor",
                         "schema": {
                             "$ref": "#/definitions/InternalServerErrorResponse"
                         }
                     }
                 }
             }
-
-      }
-      
+        }
     },
     "definitions": {
-      "CreateUserParams": {
-        "type": "object",
-        "properties": {
-          "first_name": {
-            "type": "string",
-            "example": "Pedro"
-          },
-          "last_name": {
-            "type": "string",
-            "example": "Henrique"
-          },
-          "email": {
-            "type": "string",
-            "example": "pedrinho@gmail.com"
-          },
-          "password": {
-            "type": "string",
-            "example": "senha123"
-          }
+        "CreateUserParams": {
+            "type": "object",
+            "properties": {
+                "first_name": {
+                    "type": "string",
+                    "example": "Pedro"
+                },
+                "last_name": {
+                    "type": "string",
+                    "example": "Henrique"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "pedrinho@gmail.com"
+                },
+                "password": {
+                    "type": "string",
+                    "example": "senha123"
+                }
+            }
+        },
+        "User": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "example": "e29ef739-ffae-45a8-a582-fb56f9660a12"
+                },
+                "first_name": {
+                    "type": "string",
+                    "example": "Vinicius"
+                },
+                "last_name": {
+                    "type": "string",
+                    "example": "Almeida"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "vinicius@gmail.com"
+                },
+                "password": {
+                    "type": "string",
+                    "example": "senha123"
+                }
+            }
+        },
+        "InternalServerErrorResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "Erro interno do servidor"
+                }
+            }
+        },
+        "UserNotFoundResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "Usuário não encontrado"
+                }
+            }
+        },
+        "InvalidParamsResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "Parâmetro inválido (esta mensagem depende do parâmetro que está inválido)"
+                }
+            }
         }
-      },
-      "User": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "example": "e29ef739-ffae-45a8-a582-fb56f9660a12"
-          },
-          "first_name": {
-            "type": "string",
-            "example": "Vinicius"
-          },
-          "last_name": {
-            "type": "string",
-            "example": "Almeida"
-          },
-          "email": {
-            "type": "string",
-            "example": "vinicius@gmail.com"
-          },
-          "password": {
-            "type": "string",
-            "example": "senha123"
-          }
-        }
-      },
-      "InternalServerErrorResponse": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string",
-            "example": "Erro interno do servidor"
-          }
-        }
-      },
-      "UserNotFoundResponse": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string",
-            "example": "Usuário não encontrado"
-          }
-        }
-      },
-      "InvalidParamsResponse": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string",
-            "example": "Parâmetro inválido (esta mensagem depende do parâmetro que está inválido)"
-          }
-        }
-      }
     }
-  }
-  
+}
