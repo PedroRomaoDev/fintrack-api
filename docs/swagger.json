@@ -232,8 +232,43 @@
                         }
                     }
                 }
+            },
+            "get": {
+                "summary": "Obter transações por ID do usuário",
+                "tags": ["Transação"],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "userId",
+                        "required": true,
+                        "type": "string",
+                        "description": "ID do usuário para obter as transações"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Transações encontradas",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Transaction"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Usuário não encontrado",
+                        "schema": {
+                            "$ref": "#/definitions/UserNotFoundResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor",
+                        "schema": {
+                            "$ref": "#/definitions/InternalServerErrorResponse"
+                        }
+                    }
+                }
             }
-           
         }
     },
     "definitions": {
