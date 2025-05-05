@@ -191,6 +191,48 @@
                     }
                 }
             }
+        },
+        "/api/transactions": {
+            "post": {
+                "summary": "Criar uma nova transação",
+                "tags": ["Transação"],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/CreateTransactionParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Transação criada com sucesso",
+                        "schema": {
+                            "$ref": "#/definitions/Transaction"
+                        }
+                    },
+                    "400": {
+                        "description": "Parâmetros inválidos",
+                        "schema": {
+                            "$ref": "#/definitions/InvalidParamsResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Usuário não encontrado",
+                        "schema": {
+                            "$ref": "#/definitions/UserNotFoundResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor",
+                        "schema": {
+                            "$ref": "#/definitions/InternalServerErrorResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -293,15 +335,18 @@
             "properties": {
                 "id": {
                     "type": "string",
-                    "example": "e29ef739-ffae-45a8-a582-fb56f9660a12"
+                    "example": "e29ef739-ffae-45a8-a582-fb56f9660a12",
+                    "description": "ID da transação"
                 },
                 "user_id": {
                     "type": "string",
-                    "example": "e29ef739-ffae-45a8-a582-fb56f9660a12"
+                    "example": "e29ef739-ffae-45a8-a582-fb56f9660a12",
+                    "description": "ID do usuário associado"
                 },
                 "name": {
                     "type": "string",
-                    "example": "Salary"
+                    "example": "Salário",
+                    "description": "Nome ou descrição da transação"
                 },
                 "amount": {
                     "type": "string",
@@ -310,7 +355,8 @@
                 },
                 "type": {
                     "type": "string",
-                    "example": "EARNING"
+                    "example": "EARNING",
+                    "description": "Tipo da transação (RECEITA, DESPESA ou INVESTIMENTO)"
                 }
             }
         },
@@ -319,11 +365,13 @@
             "properties": {
                 "user_id": {
                     "type": "string",
-                    "example": "e29ef739-ffae-45a8-a582-fb56f9660a12"
+                    "example": "e29ef739-ffae-45a8-a582-fb56f9660a12",
+                    "description": "ID do usuário associado"
                 },
                 "name": {
                     "type": "string",
-                    "example": "Salary"
+                    "example": "Salário",
+                    "description": "Nome ou descrição da transação"
                 },
                 "amount": {
                     "type": "number",
@@ -332,11 +380,13 @@
                 },
                 "date": {
                     "type": "string",
-                    "example": "2020-01-01T00:00:00Z"
+                    "example": "2020-01-01T00:00:00Z",
+                    "description": "Data da transação"
                 },
                 "type": {
                     "type": "string",
-                    "example": "EARNING"
+                    "example": "EARNING",
+                    "description": "EARNING, EXPENSE or INVESTMENT"
                 }
             }
         },
@@ -345,7 +395,8 @@
             "properties": {
                 "name": {
                     "type": "string",
-                    "example": "Salary"
+                    "example": "Salário",
+                    "description": "Nome ou descrição da transação"
                 },
                 "amount": {
                     "type": "number",
@@ -354,11 +405,13 @@
                 },
                 "date": {
                     "type": "string",
-                    "example": "2020-01-01T00:00:00Z"
+                    "example": "2020-01-01T00:00:00Z",
+                    "description": "Data da transação"
                 },
                 "type": {
                     "type": "string",
-                    "example": "EARNING"
+                    "example": "RECEITA",
+                    "description": "EARNING, EXPENSE or INVESTMENT"
                 }
             }
         },
@@ -367,7 +420,7 @@
             "properties": {
                 "message": {
                     "type": "string",
-                    "example": "Transaction not found"
+                    "example": "Transação não encontrada"
                 }
             }
         }
