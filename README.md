@@ -12,6 +12,7 @@ Fintrack API é a API de um sistema de controle de finanças pessoais, desenvolv
 - Clean Architecture
 - ESLint + Prettier
 - Jest (para testes)
+- Swagger (para documentar)
 
 ## 📁 Estrutura do Projeto
 
