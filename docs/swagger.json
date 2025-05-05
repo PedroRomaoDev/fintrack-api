@@ -42,6 +42,41 @@
                 }
             }
         },
+        "/api/users/{userId}/balance": {
+            "get": {
+                "summary": "Obter saldo do usuário por ID",
+                "tags": ["Usuário"],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "userId",
+                        "required": true,
+                        "type": "string",
+                        "description": "ID do usuário para consultar o saldo"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Saldo do usuário encontrado",
+                        "schema": {
+                            "$ref": "#/definitions/UserBalance"
+                        }
+                    },
+                    "404": {
+                        "description": "Usuário não encontrado",
+                        "schema": {
+                            "$ref": "#/definitions/UserNotFoundResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor",
+                        "schema": {
+                            "$ref": "#/definitions/InternalServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/users/{userId}": {
             "get": {
                 "summary": "Obter usuário por ID",
@@ -58,39 +93,6 @@
                 "responses": {
                     "200": {
                         "description": "Usuário encontrado",
-                        "schema": {
-                            "$ref": "#/definitions/User"
-                        }
-                    },
-                    "404": {
-                        "description": "Usuário não encontrado",
-                        "schema": {
-                            "$ref": "#/definitions/UserNotFoundResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/InternalServerErrorResponse"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "summary": "Excluir usuário por ID",
-                "tags": ["Usuário"],
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "userId",
-                        "required": true,
-                        "type": "string",
-                        "description": "ID do usuário a ser excluído"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Usuário excluído com sucesso",
                         "schema": {
                             "$ref": "#/definitions/User"
                         }
@@ -140,6 +142,39 @@
                         "description": "Parâmetros inválidos",
                         "schema": {
                             "$ref": "#/definitions/InvalidParamsResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Usuário não encontrado",
+                        "schema": {
+                            "$ref": "#/definitions/UserNotFoundResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor",
+                        "schema": {
+                            "$ref": "#/definitions/InternalServerErrorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Excluir usuário por ID",
+                "tags": ["Usuário"],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "userId",
+                        "required": true,
+                        "type": "string",
+                        "description": "ID do usuário a ser excluído"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuário excluído com sucesso",
+                        "schema": {
+                            "$ref": "#/definitions/User"
                         }
                     },
                     "404": {
@@ -229,6 +264,27 @@
                 "message": {
                     "type": "string",
                     "example": "Parâmetro inválido (esta mensagem depende do parâmetro que está inválido)"
+                }
+            }
+        },
+        "UserBalance": {
+            "type": "object",
+            "properties": {
+                "earnings": {
+                    "type": "string",
+                    "example": "2000"
+                },
+                "expenses": {
+                    "type": "string",
+                    "example": "300"
+                },
+                "investments": {
+                    "type": "string",
+                    "example": "700"
+                },
+                "balance": {
+                    "type": "string",
+                    "example": "5900"
                 }
             }
         }
