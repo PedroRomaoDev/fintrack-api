@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-      "title": "Fintrack API",
+      "title": "Fintrack | API Acadêmica para Gestão de Finanças",
       "description": "A Fintrack API é a interface de comunicação backend do sistema de controle de finanças Fintrack, desenvolvida para um trabalho acadêmico das disciplinas de Teste de Software, Engenharia de Software e Programação Web. Esta API é responsável por gerenciar os dados dos usuários, transações financeiras, autenticação e regras de negócio do sistema.",
       "version": "1.0.0"
     },
@@ -92,7 +92,7 @@
           },
           "email": {
             "type": "string",
-            "example": "pedrinho@doe.com"
+            "example": "pedrinho@gmail.com"
           },
           "password": {
             "type": "string",
@@ -109,15 +109,15 @@
           },
           "first_name": {
             "type": "string",
-            "example": "Pedro"
+            "example": "Vinicius"
           },
           "last_name": {
             "type": "string",
-            "example": "Henrique"
+            "example": "Almeida"
           },
           "email": {
             "type": "string",
-            "example": "pedrinho@doe.com"
+            "example": "vinicius@gmail.com"
           },
           "password": {
             "type": "string",
