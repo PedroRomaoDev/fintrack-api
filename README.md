@@ -21,19 +21,30 @@ A arquitetura segue os princípios da **Clean Architecture**, **SOLID** e **Adap
 ```
 fintrack-api/
 │
-├── prisma/                     # Arquivos de migração e schema do Prisma
-├── src/
-│   ├── adapters/               # Adaptadores e interfaces
-│   ├── controllers/           # Controladores que recebem as requisições HTTP
-│   ├── errors/                # Definições de erros customizados
-│   ├── factories/             # Factories para injeção de dependência
-│   ├── repositories/          # Implementações dos repositórios (Postgres etc.)
-│   ├── schemas/               # Validações de entrada com Zod (ou outra lib)
-│   └── use-cases/             # Regras de negócio
+├── .husky/                      # Hooks de git para automação de tarefas
+├── docs/                        # Documentação da API
+│   └── swagger.json             # Especificação Swagger
+├── prisma/                      # Arquivos de migração e schema do Prisma
+|
+├── src/                         # Código-fonte principal
+│   ├── adapters/                # Adaptadores e interfaces
+│   ├── controllers/             # Controladores HTTP e Tratamento de Erros
+│   ├── errors/                  # Definições de erros customizados
+│   ├── factories/               # Centralizar a criação de objetos
+│   ├── repositories/            # Implementações dos repositórios (Postgres etc.)
+│   ├── routes/                  # Definição das rotas da API
+│   ├── schemas/                 # Validações de entrada com Zod
+│   └── use-cases/               # Regras de negócio
+│   └── app.js                   # Configuração principal do app Express
 │
-├── .env.example               # Exemplo de variáveis de ambiente
-├── docker-compose.yml         # Configuração do Docker
-├── index.js                   # Ponto de entrada da aplicação
+├── .env.example                 # Exemplo de variáveis de ambiente
+├── .gitignore                   # Arquivos e pastas ignorados pelo git
+├── .lintstagedrc.json           # Configuração do lint-staged
+├── .prettierrc.json             # Configuração do Prettier
+├── docker-compose.yml           # Configuração do Docker
+├── eslint.config.js             # Configuração do ESLint
+└── index.js                     # Ponto de entrada da aplicação
+
 ```
 
 ## 🚀 Como Executar Localmente
