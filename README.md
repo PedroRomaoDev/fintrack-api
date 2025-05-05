@@ -87,5 +87,9 @@ docker-compose up -d
 ```bash
 npm run start:dev
 ```
+### 7. Acessar a documentação da API
+
+Após iniciar a aplicação, a documentação da API estará disponível em [http://localhost:8080/docs](http://localhost:8080/docs).
+
 
 ---
