@@ -34,4 +34,20 @@ describe('Create User Controller', () => {
         expect(result.statusCode).toBe(201);
         expect(result.body).toEqual(user);
     });
+
+    it('returns 400 when first_name is missing', async () => {
+        // arrange
+        const { sut } = makeSut();
+
+        // act
+        const result = await sut.execute({
+            body: {
+                ...httpRequest.body,
+                first_name: undefined,
+            },
+        });
+
+        // assert
+        expect(result.statusCode).toBe(400);
+    });
 });
