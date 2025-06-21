@@ -5,6 +5,8 @@ import {
     makeUpdateUserController,
     makeDeleteUserController,
     makeGetUserBalanceController,
+    makeLoginUserController,
+    // makeRefreshTokenController,
 } from '../factories/controllers/user.js';
 import { auth } from '../middlewares/auth.js';
 
@@ -71,5 +73,11 @@ usersRouter.get('/me/balance', auth, async (request, response) => {
             to: request.query.to,
         },
     });
+    response.status(statusCode).send(body);
+});
+
+usersRouter.post('/login', async (request, response) => {
+    const loginUserController = makeLoginUserController();
+    const { statusCode, body } = await loginUserController.execute(request);
     response.status(statusCode).send(body);
 });
