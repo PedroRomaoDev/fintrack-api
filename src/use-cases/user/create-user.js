@@ -6,11 +6,13 @@ export class CreateUserUseCase {
         createUserRepository,
         passwordHasherAdapter,
         idGeneratorAdapter,
+        tokenGeneratorAdapter,
     ) {
         this.getUserByEmailRepository = getUserByEmailRepository;
         this.createUserRepository = createUserRepository;
         this.passwordHasherAdapter = passwordHasherAdapter;
         this.idGeneratorAdapter = idGeneratorAdapter;
+        this.tokenGeneratorAdapter = tokenGeneratorAdapter;
     }
     async execute(createUserParams) {
         //verificar se o email já está em uso
@@ -40,6 +42,9 @@ export class CreateUserUseCase {
 
         const createdUser = await this.createUserRepository.execute(user);
 
-        return createdUser;
+        return {
+            ...createdUser,
+            tokens: this.tokenGeneratorAdapter.execute(userId),
+        };
     }
 }
