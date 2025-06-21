@@ -26,11 +26,16 @@ transactionsRouter.get('/me', auth, async (request, response) => {
     response.status(statusCode).send(body);
 });
 
-transactionsRouter.post('/', async (request, response) => {
+transactionsRouter.post('/me', auth, async (request, response) => {
     const createTransactionController = makeCreateTransactionController();
 
-    const { statusCode, body } =
-        await createTransactionController.execute(request);
+    const { statusCode, body } = await createTransactionController.execute({
+        ...request,
+        body: {
+            ...request.body,
+            user_id: request.userId,
+        },
+    });
     response.status(statusCode).send(body);
 });
 
