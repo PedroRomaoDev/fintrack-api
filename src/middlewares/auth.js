@@ -13,7 +13,6 @@ export const auth = (request, response, next) => {
         // verificar se o access token é válido
         const decodedToken = jwt.verify(
             accessToken,
-            // eslint-disable-next-line no-undef
             process.env.JWT_ACCESS_TOKEN_SECRET,
         );
         if (!decodedToken) {
