@@ -141,4 +141,16 @@ describe('Create User Controller', () => {
         // assert
         expect(executeSpy).toHaveBeenCalledWith(httpRequest.body);
     });
+    it('returns 500 if CreateUserUseCase throws a generic error', async () => {
+        // arrange
+        const { sut, createUserUseCase } = makeSut();
+
+        jest.spyOn(createUserUseCase, 'execute').mockRejectedValue(new Error());
+
+        // act
+        const result = await sut.execute(httpRequest);
+
+        // assert
+        expect(result.statusCode).toBe(500);
+    });
 });
