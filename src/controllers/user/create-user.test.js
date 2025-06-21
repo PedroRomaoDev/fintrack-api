@@ -1,4 +1,5 @@
 import { CreateUserController } from './create-user.js';
+import { faker } from '@faker-js/faker';
 
 import { user } from '../../tests/index.js';
 
@@ -104,6 +105,24 @@ describe('Create User Controller', () => {
             body: {
                 ...httpRequest.body,
                 password: undefined,
+            },
+        });
+
+        // assert
+        expect(result.statusCode).toBe(400);
+    });
+
+    it('returns 400 when password is less than 6 characters', async () => {
+        // arrange
+        const { sut } = makeSut();
+
+        // act
+        const result = await sut.execute({
+            body: {
+                ...httpRequest.body,
+                password: faker.internet.password({
+                    length: 5,
+                }),
             },
         });
 
