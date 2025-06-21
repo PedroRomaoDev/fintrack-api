@@ -30,4 +30,19 @@ describe('Auth middleware', () => {
         expect(req.userId).toBe(userId);
         expect(next).toHaveBeenCalled();
     });
+
+    it('deve retornar 401 se o token não for fornecido', () => {
+        const req = { headers: {} };
+        const res = {
+            status: jest.fn().mockReturnThis(),
+            send: jest.fn(),
+        };
+        const next = jest.fn();
+
+        auth(req, res, next);
+
+        expect(res.status).toHaveBeenCalledWith(401);
+        expect(res.send).toHaveBeenCalledWith({ message: 'Unauthorized' });
+        expect(next).not.toHaveBeenCalled();
+    });
 });
