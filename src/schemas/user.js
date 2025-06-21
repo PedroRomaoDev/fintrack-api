@@ -39,3 +39,35 @@ export const createUserSchema = z.object({
 export const updateUserSchema = createUserSchema.partial().strict({
     message: 'Some provided field is not allowed.',
 });
+
+export const loginUserSchema = z.object({
+    email: z
+        .string({
+            required_error: 'E-mail is required.',
+        })
+        .email({
+            message: 'Please provide a valid email.',
+        })
+        .trim()
+        .min(1),
+    password: z
+        .string({
+            required_error: 'Password is required.',
+        })
+        .trim({})
+        .min(6, {
+            message: 'Password must have at least 6 characters.',
+        }),
+});
+
+export const refreshTokenSchema = z.object({
+    refreshToken: z.string().trim().min(1, {
+        message: 'Refresh token is required.',
+    }),
+});
+
+export const getUserBalanceSchema = z.object({
+    user_id: z.string().uuid(),
+    from: z.string().date(),
+    to: z.string().date(),
+});
