@@ -5,15 +5,24 @@ import {
     makeUpdateTransactionController,
     makeDeleteTransactionController,
 } from '../factories/controllers/transaction.js';
+import { auth } from '../middlewares/auth.js';
 
 export const transactionsRouter = Router();
 
-transactionsRouter.get('/', async (request, response) => {
+transactionsRouter.get('/me', auth, async (request, response) => {
     const getTransactionsByUserIdController =
         makeGetTransactionsByUserIdController();
 
     const { statusCode, body } =
-        await getTransactionsByUserIdController.execute(request);
+        await getTransactionsByUserIdController.execute({
+            ...request,
+            query: {
+                ...request.query,
+                from: request.query.from,
+                to: request.query.to,
+                userId: request.userId,
+            },
+        });
     response.status(statusCode).send(body);
 });
 
