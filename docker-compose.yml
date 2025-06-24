@@ -9,6 +9,6 @@ services:
             POSTGRES_PASSWORD: pedro2012
             POSTGRES_DB: fintrack-api
         ports:
-            - '5432:5432'
+            - '5433:5432'
         volumes:
             - ./.postgres:/var/lib/postgresql/data

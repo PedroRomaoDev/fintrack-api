@@ -26,10 +26,13 @@ export class LoginUserUseCase {
             throw new InvalidPasswordError();
         }
 
+     console.log(user)
+    console.log( await this.tokenGeneratorAdapter.execute(user.id))
+
         // depois, gerar os tokens
         return {
-            ...user,
-            tokens: this.tokenGeneratorAdapter.execute(user.id),
+            user: user,
+            tokens: await this.tokenGeneratorAdapter.execute(user.id),
         };
     }
 }

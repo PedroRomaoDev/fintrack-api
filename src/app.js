@@ -3,9 +3,11 @@ import { usersRouter, transactionsRouter } from './routes/index.js';
 import swaggerUi from 'swagger-ui-express';
 import fs from 'fs';
 import path from 'path';
+import cors from 'cors'
 
 export const app = express();
 
+app.use(cors())
 app.use(express.json());
 
 app.use('/api/users', usersRouter);
