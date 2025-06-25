@@ -71,4 +71,14 @@ describe('LoginUserUseCase', () => {
         //assert
         expect(promise).rejects.toThrow(new InvalidPasswordError());
     });
+    it('should return user with tokens', async () => {
+        //arrange
+        const { sut } = makeSut();
+
+        //act
+        const result = await sut.execute('any_email', 'any_password');
+
+        //assert
+        expect(result.tokens.accessToken).toBeDefined();
+    });
 });
