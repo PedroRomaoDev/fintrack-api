@@ -1,12 +1,16 @@
+import { ZodError } from 'zod';
+import { updateTransactionSchema } from '../../schemas/transaction.js';
 import {
     checkIfIdIsValid,
     invalidIdResponse,
     serverError,
     ok,
     badRequest,
+    transactionNotFoundResponse,
+    forbidden,
 } from '../helpers/index.js';
-import { updateTransactionSchema } from '../../schemas/transaction.js';
-import { ZodError } from 'zod';
+import { TransactionNotFoundError } from '../../errors/transaction.js';
+import { ForbiddenError } from '../../errors/user.js';
 
 export class UpdateTransactionController {
     constructor(updateTransactionUseCase) {
@@ -15,7 +19,6 @@ export class UpdateTransactionController {
     async execute(httpRequest) {
         try {
             const idIsValid = checkIfIdIsValid(
-                //verificar se o id é válido
                 httpRequest.params.transactionId,
             );
 
@@ -25,21 +28,29 @@ export class UpdateTransactionController {
 
             const params = httpRequest.body;
 
-            await updateTransactionSchema.parseAsync(params); //verifica se o body está correto com schema do zod
+            await updateTransactionSchema.parseAsync(params);
 
             const transaction = await this.updateTransactionUseCase.execute(
                 httpRequest.params.transactionId,
                 params,
             );
 
-            return ok(transaction); //retorna o objeto atualizado
+            return ok(transaction);
         } catch (error) {
             if (error instanceof ZodError) {
-                //verifica se o erro é do tipo ZodError
                 return badRequest({
                     message: error.errors[0].message,
                 });
             }
+
+            if (error instanceof TransactionNotFoundError) {
+                return transactionNotFoundResponse();
+            }
+
+            if (error instanceof ForbiddenError) {
+                return forbidden();
+            }
+
             console.error(error);
 
             return serverError();
