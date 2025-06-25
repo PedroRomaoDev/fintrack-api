@@ -1,4 +1,4 @@
-// import { UnauthorizedError } from '../../errors';
+import { UnauthorizedError } from '../../errors';
 import { RefreshTokenUseCase } from './refresh-token';
 
 describe('RefreshTokenUseCase', () => {
@@ -37,5 +37,16 @@ describe('RefreshTokenUseCase', () => {
             accessToken: 'any_access_token',
             refreshToken: 'any_refresh_token',
         });
+    });
+    it('should throw UnautorizedError if tokenVerifierAdapter throws', () => {
+        const { sut, tokenVerifierAdapter } = makeSut();
+        jest.spyOn(tokenVerifierAdapter, 'execute').mockImplementationOnce(
+            () => {
+                new UnauthorizedError();
+            },
+        );
+        expect(() => sut.execute('any_refresh_token')).toThrow(
+            new UnauthorizedError(),
+        );
     });
 });
