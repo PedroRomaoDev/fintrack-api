@@ -5,11 +5,24 @@
         "description": "A Fintrack API é a interface de comunicação backend do sistema de controle de finanças Fintrack, desenvolvida para um trabalho acadêmico das disciplinas de Teste de Software, Engenharia de Software e Programação Web. Esta API é responsável por gerenciar os dados dos usuários, transações financeiras, autenticação e regras de negócio do sistema.",
         "version": "1.0.0"
     },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header",
+            "description": "Enter 'Bearer' followed by your token. Example: 'Bearer eyJhbGciOiJIUzI1NiIsInR..."
+        }
+    },
+    "security": [
+        {
+            "BearerAuth": []
+        }
+    ],
     "paths": {
         "/api/users": {
             "post": {
-                "summary": "Criar um novo usuário",
-                "tags": ["Usuário"],
+                "summary": "Create a new user",
+                "tags": ["User"],
                 "parameters": [
                     {
                         "name": "body",
@@ -22,19 +35,19 @@
                 ],
                 "responses": {
                     "201": {
-                        "description": "Usuário criado com sucesso",
+                        "description": "User created successfully",
                         "schema": {
-                            "$ref": "#/definitions/User"
+                            "$ref": "#/definitions/UserWithToken"
                         }
                     },
                     "400": {
-                        "description": "Parâmetros inválidos",
+                        "description": "Invalid params",
                         "schema": {
                             "$ref": "#/definitions/InvalidParamsResponse"
                         }
                     },
                     "500": {
-                        "description": "Erro interno do servidor",
+                        "description": "Internal server error",
                         "schema": {
                             "$ref": "#/definitions/InternalServerErrorResponse"
                         }
@@ -42,86 +55,69 @@
                 }
             }
         },
-        "/api/users/{userId}/balance": {
+        "/api/users/me": {
             "get": {
-                "summary": "Obter saldo do usuário por ID",
-                "tags": ["Usuário"],
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "userId",
-                        "required": true,
-                        "type": "string",
-                        "description": "ID do usuário para consultar o saldo"
-                    }
-                ],
+                "summary": "Get authenticated user",
+                "tags": ["User"],
                 "responses": {
                     "200": {
-                        "description": "Saldo do usuário encontrado",
-                        "schema": {
-                            "$ref": "#/definitions/UserBalance"
-                        }
-                    },
-                    "404": {
-                        "description": "Usuário não encontrado",
-                        "schema": {
-                            "$ref": "#/definitions/UserNotFoundResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/InternalServerErrorResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/users/{userId}": {
-            "get": {
-                "summary": "Obter usuário por ID",
-                "tags": ["Usuário"],
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "userId",
-                        "required": true,
-                        "type": "string",
-                        "description": "ID do usuário a ser obtido"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Usuário encontrado",
+                        "description": "User found",
                         "schema": {
                             "$ref": "#/definitions/User"
                         }
                     },
                     "404": {
-                        "description": "Usuário não encontrado",
+                        "description": "User not found",
                         "schema": {
                             "$ref": "#/definitions/UserNotFoundResponse"
                         }
                     },
                     "500": {
-                        "description": "Erro interno do servidor",
+                        "description": "Internal server error",
                         "schema": {
                             "$ref": "#/definitions/InternalServerErrorResponse"
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "summary": "Delete authenticated user",
+                "tags": ["User"],
+                "responses": {
+                    "200": {
+                        "description": "User deleted successfully",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "schema": {
+                            "$ref": "#/definitions/UserNotFoundResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/InternalServerErrorResponse"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
             },
             "patch": {
-                "summary": "Atualizar usuário por ID",
-                "tags": ["Usuário"],
+                "summary": "Update authenticated user",
+                "tags": ["User"],
                 "parameters": [
-                    {
-                        "in": "path",
-                        "name": "userId",
-                        "required": true,
-                        "type": "string",
-                        "description": "ID do usuário a ser atualizado"
-                    },
                     {
                         "name": "body",
                         "required": true,
@@ -133,58 +129,66 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Usuário atualizado com sucesso",
+                        "description": "User updated successfully",
                         "schema": {
                             "$ref": "#/definitions/User"
                         }
                     },
                     "400": {
-                        "description": "Parâmetros inválidos",
+                        "description": "Invalid params",
                         "schema": {
                             "$ref": "#/definitions/InvalidParamsResponse"
                         }
                     },
                     "404": {
-                        "description": "Usuário não encontrado",
+                        "description": "User not found",
                         "schema": {
                             "$ref": "#/definitions/UserNotFoundResponse"
                         }
                     },
                     "500": {
-                        "description": "Erro interno do servidor",
+                        "description": "Internal server error",
                         "schema": {
                             "$ref": "#/definitions/InternalServerErrorResponse"
                         }
                     }
-                }
-            },
-            "delete": {
-                "summary": "Excluir usuário por ID",
-                "tags": ["Usuário"],
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/users/login": {
+            "post": {
+                "summary": "Login User",
+                "tags": ["User"],
                 "parameters": [
                     {
-                        "in": "path",
-                        "name": "userId",
+                        "name": "body",
                         "required": true,
-                        "type": "string",
-                        "description": "ID do usuário a ser excluído"
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/LoginUserParams"
+                        }
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "Usuário excluído com sucesso",
+                    "201": {
+                        "description": "User logged in successfully",
                         "schema": {
-                            "$ref": "#/definitions/User"
+                            "$ref": "#/definitions/UserWithToken"
                         }
                     },
-                    "404": {
-                        "description": "Usuário não encontrado",
+                    "401": {
+                        "description": "Invalid credentials",
                         "schema": {
-                            "$ref": "#/definitions/UserNotFoundResponse"
+                            "$ref": "#/definitions/UnauthorizedErrorResponse"
                         }
                     },
                     "500": {
-                        "description": "Erro interno do servidor",
+                        "description": "Internal server error",
                         "schema": {
                             "$ref": "#/definitions/InternalServerErrorResponse"
                         }
@@ -192,10 +196,101 @@
                 }
             }
         },
-        "/api/transactions": {
+        "/api/users/refresh-token": {
             "post": {
-                "summary": "Criar uma nova transação",
-                "tags": ["Transação"],
+                "summary": "Refresh User Token",
+                "tags": ["User"],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/RefreshTokenParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Tokens generated successfully",
+                        "schema": {
+                            "$ref": "#/definitions/Tokens"
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid token",
+                        "schema": {
+                            "$ref": "#/definitions/UnauthorizedErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/InternalServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/me/balance": {
+            "get": {
+                "summary": "Get authenticated user balance",
+                "tags": ["User"],
+                "parameters": [
+                    {
+                        "name": "from",
+                        "in": "query",
+                        "required": true,
+                        "description": "Start date for the transaction query (format: 2020-01-01)",
+                        "schema": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "2020-01-01"
+                        }
+                    },
+                    {
+                        "name": "to",
+                        "in": "query",
+                        "required": true,
+                        "description": "End date for the transaction query (format: 2020-01-01)",
+                        "schema": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "2020-01-01"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User balance found",
+                        "schema": {
+                            "$ref": "#/definitions/UserBalance"
+                        }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "schema": {
+                            "$ref": "#/definitions/UserNotFoundResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/InternalServerErrorResponse"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/transactions/me": {
+            "post": {
+                "summary": "Create a new transaction for the authenticated user",
+                "tags": ["Transaction"],
                 "parameters": [
                     {
                         "name": "body",
@@ -208,46 +303,66 @@
                 ],
                 "responses": {
                     "201": {
-                        "description": "Transação criada com sucesso",
+                        "description": "Transaction created successfully",
                         "schema": {
                             "$ref": "#/definitions/Transaction"
                         }
                     },
                     "400": {
-                        "description": "Parâmetros inválidos",
+                        "description": "Invalid params",
                         "schema": {
                             "$ref": "#/definitions/InvalidParamsResponse"
                         }
                     },
                     "404": {
-                        "description": "Usuário não encontrado",
+                        "description": "User not found",
                         "schema": {
                             "$ref": "#/definitions/UserNotFoundResponse"
                         }
                     },
                     "500": {
-                        "description": "Erro interno do servidor",
+                        "description": "Internal server error",
                         "schema": {
                             "$ref": "#/definitions/InternalServerErrorResponse"
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
             },
             "get": {
-                "summary": "Obter transações por ID do usuário",
-                "tags": ["Transação"],
+                "summary": "Get authenticated user transactions",
+                "tags": ["Transaction"],
                 "parameters": [
                     {
+                        "name": "from",
                         "in": "query",
-                        "name": "userId",
                         "required": true,
-                        "type": "string",
-                        "description": "ID do usuário para obter as transações"
+                        "description": "Start date for the transaction query (format: 2020-01-01)",
+                        "schema": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "2020-01-01"
+                        }
+                    },
+                    {
+                        "name": "to",
+                        "in": "query",
+                        "required": true,
+                        "description": "End date for the transaction query (format: 2020-01-01)",
+                        "schema": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "2020-01-01"
+                        }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Transações encontradas",
+                        "description": "Transactions found",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -256,24 +371,29 @@
                         }
                     },
                     "404": {
-                        "description": "Usuário não encontrado",
+                        "description": "User not found",
                         "schema": {
                             "$ref": "#/definitions/UserNotFoundResponse"
                         }
                     },
                     "500": {
-                        "description": "Erro interno do servidor",
+                        "description": "Internal server error",
                         "schema": {
                             "$ref": "#/definitions/InternalServerErrorResponse"
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
             }
         },
-        "/api/transactions/{transactionId}": {
+        "/api/transactions/me/{transactionId}": {
             "patch": {
-                "summary": "Atualizar transação por ID",
-                "tags": ["Transação"],
+                "summary": "Update authenticated user transaction by ID",
+                "tags": ["Transaction"],
                 "parameters": [
                     {
                         "in": "path",
@@ -293,34 +413,39 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Transação atualizada com sucesso",
+                        "description": "Transaction updated successfully",
                         "schema": {
                             "$ref": "#/definitions/Transaction"
                         }
                     },
                     "400": {
-                        "description": "Parâmetros inválidos",
+                        "description": "Invalid params",
                         "schema": {
                             "$ref": "#/definitions/InvalidParamsResponse"
                         }
                     },
                     "404": {
-                        "description": "Transação não encontrada",
+                        "description": "Transaction not found",
                         "schema": {
                             "$ref": "#/definitions/TransactionNotFoundResponse"
                         }
                     },
                     "500": {
-                        "description": "Erro interno do servidor",
+                        "description": "Internal server error",
                         "schema": {
                             "$ref": "#/definitions/InternalServerErrorResponse"
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
             },
             "delete": {
-                "summary": "Deletar transação por ID",
-                "tags": ["Transação"],
+                "summary": "Delete uauthenticated user transaction by ID",
+                "tags": ["Transaction"],
                 "parameters": [
                     {
                         "in": "path",
@@ -332,24 +457,29 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Transação deletada com sucesso",
+                        "description": "Transaction deleted successfully",
                         "schema": {
                             "$ref": "#/definitions/Transaction"
                         }
                     },
                     "404": {
-                        "description": "Transação não encontrada",
+                        "description": "Transaction not found",
                         "schema": {
                             "$ref": "#/definitions/TransactionNotFoundResponse"
                         }
                     },
                     "500": {
-                        "description": "Erro interno do servidor",
+                        "description": "Internal server error",
                         "schema": {
                             "$ref": "#/definitions/InternalServerErrorResponse"
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
             }
         }
     },
@@ -367,11 +497,11 @@
                 },
                 "email": {
                     "type": "string",
-                    "example": "pedrinho@gmail.com"
+                    "example": "pedrinho@doe.com"
                 },
                 "password": {
                     "type": "string",
-                    "example": "senha123"
+                    "example": "password"
                 }
             }
         },
@@ -384,19 +514,82 @@
                 },
                 "first_name": {
                     "type": "string",
-                    "example": "Vinicius"
+                    "example": "Pedro"
                 },
                 "last_name": {
                     "type": "string",
-                    "example": "Almeida"
+                    "example": "Henrique"
                 },
                 "email": {
                     "type": "string",
-                    "example": "vinicius@gmail.com"
+                    "example": "pedrinho@doe.com"
                 },
                 "password": {
                     "type": "string",
-                    "example": "senha123"
+                    "example": "password"
+                }
+            }
+        },
+        "LoginUserParams": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "john@doe.com",
+                    "required": true
+                },
+                "password": {
+                    "type": "string",
+                    "example": "password",
+                    "required": true
+                }
+            }
+        },
+        "RefreshTokenParams": {
+            "type": "object",
+            "properties": {
+                "refreshToken": {
+                    "type": "string",
+                    "required": true,
+                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3OGQxNzc1OS03ZTA4LTRlNDEtOTM5YS1iMmZjNWNiODI4MjEiLCJpYXQiOjE3MzI5MjIzMDUsImV4cCI6MTczNTUxNDMwNX0.ugNCojNKTkxFTVF9F2ISmo0aqZjIRynxLNclpNPSsDo"
+                }
+            }
+        },
+        "UserWithToken": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/User"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "tokens": {
+                            "type": "object",
+                            "properties": {
+                                "accessToken": {
+                                    "type": "string",
+                                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                                },
+                                "refreshToken": {
+                                    "type": "string",
+                                    "example": "dGhpc2lzYXJlZnJlc2h0b2tlbg=="
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "Tokens": {
+            "type": "object",
+            "properties": {
+                "accessToken": {
+                    "type": "string",
+                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3OGQxNzc1OS03ZTA4LTRlNDEtOTM5YS1iMmZjNWNiODI4MjEiLCJpYXQiOjE3MzI5MjIzMDUsImV4cCI6MTczMjkyMzIwNX0.imPbb_Agn3qoYrU5p48TXhhn4wpP9n4qYR9K9h5NRMc"
+                },
+                "refreshToken": {
+                    "type": "string",
+                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3OGQxNzc1OS03ZTA4LTRlNDEtOTM5YS1iMmZjNWNiODI4MjEiLCJpYXQiOjE3MzI5MjIzMDUsImV4cCI6MTczNTUxNDMwNX0.ugNCojNKTkxFTVF9F2ISmo0aqZjIRynxLNclpNPSsDo"
                 }
             }
         },
@@ -405,7 +598,7 @@
             "properties": {
                 "message": {
                     "type": "string",
-                    "example": "Erro interno do servidor"
+                    "example": "Internal server error"
                 }
             }
         },
@@ -414,7 +607,7 @@
             "properties": {
                 "message": {
                     "type": "string",
-                    "example": "Usuário não encontrado"
+                    "example": "User not found"
                 }
             }
         },
@@ -423,7 +616,7 @@
             "properties": {
                 "message": {
                     "type": "string",
-                    "example": "Parâmetro inválido (esta mensagem depende do parâmetro que está inválido)"
+                    "example": "Invalid param (this message depends on the param that is invalid)"
                 }
             }
         },
@@ -432,19 +625,31 @@
             "properties": {
                 "earnings": {
                     "type": "string",
-                    "example": "2000"
+                    "example": "1000"
                 },
                 "expenses": {
                     "type": "string",
-                    "example": "300"
+                    "example": "500"
                 },
                 "investments": {
                     "type": "string",
-                    "example": "700"
+                    "example": "200"
+                },
+                "earningsPercentage": {
+                    "type": "string",
+                    "example": "50"
+                },
+                "expensesPercentage": {
+                    "type": "string",
+                    "example": "25"
+                },
+                "investmentsPercentage": {
+                    "type": "string",
+                    "example": "25"
                 },
                 "balance": {
                     "type": "string",
-                    "example": "5900"
+                    "example": "500"
                 }
             }
         },
@@ -453,18 +658,15 @@
             "properties": {
                 "id": {
                     "type": "string",
-                    "example": "e29ef739-ffae-45a8-a582-fb56f9660a12",
-                    "description": "ID da transação"
+                    "example": "e29ef739-ffae-45a8-a582-fb56f9660a12"
                 },
                 "user_id": {
                     "type": "string",
-                    "example": "e29ef739-ffae-45a8-a582-fb56f9660a12",
-                    "description": "ID do usuário associado"
+                    "example": "e29ef739-ffae-45a8-a582-fb56f9660a12"
                 },
                 "name": {
                     "type": "string",
-                    "example": "Salário",
-                    "description": "Nome ou descrição da transação"
+                    "example": "Salary"
                 },
                 "amount": {
                     "type": "string",
@@ -473,23 +675,16 @@
                 },
                 "type": {
                     "type": "string",
-                    "example": "EARNING",
-                    "description": "Tipo da transação (RECEITA, DESPESA ou INVESTIMENTO)"
+                    "example": "EARNING"
                 }
             }
         },
         "CreateTransactionParams": {
             "type": "object",
             "properties": {
-                "user_id": {
-                    "type": "string",
-                    "example": "e29ef739-ffae-45a8-a582-fb56f9660a12",
-                    "description": "ID do usuário associado"
-                },
                 "name": {
                     "type": "string",
-                    "example": "Salário",
-                    "description": "Nome ou descrição da transação"
+                    "example": "Salary"
                 },
                 "amount": {
                     "type": "number",
@@ -498,13 +693,11 @@
                 },
                 "date": {
                     "type": "string",
-                    "example": "2020-01-01T00:00:00Z",
-                    "description": "Data da transação"
+                    "example": "2020-01-01T00:00:00Z"
                 },
                 "type": {
                     "type": "string",
-                    "example": "EARNING",
-                    "description": "EARNING, EXPENSE or INVESTMENT"
+                    "example": "EARNING"
                 }
             }
         },
@@ -513,8 +706,7 @@
             "properties": {
                 "name": {
                     "type": "string",
-                    "example": "Salário",
-                    "description": "Nome ou descrição da transação"
+                    "example": "Salary"
                 },
                 "amount": {
                     "type": "number",
@@ -523,13 +715,11 @@
                 },
                 "date": {
                     "type": "string",
-                    "example": "2020-01-01T00:00:00Z",
-                    "description": "Data da transação"
+                    "example": "2020-01-01T00:00:00Z"
                 },
                 "type": {
                     "type": "string",
-                    "example": "RECEITA",
-                    "description": "EARNING, EXPENSE or INVESTMENT"
+                    "example": "EARNING"
                 }
             }
         },
@@ -538,7 +728,16 @@
             "properties": {
                 "message": {
                     "type": "string",
-                    "example": "Transação não encontrada"
+                    "example": "Transaction not found"
+                }
+            }
+        },
+        "UnauthorizedErrorResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "Unauthorized"
                 }
             }
         }
