@@ -12,3 +12,13 @@ services:
             - '5432:5432'
         volumes:
             - ./.postgres:/var/lib/postgresql/data
+
+    postgres-test:
+        image: postgres
+        container_name: fintrack-app-postgres-test
+        environment:
+            POSTGRES_PASSWORD: pedro2012
+            POSTGRES_USER: root
+            POSTGRES_DB: finance-app
+        ports:
+            - '5433:5432'
