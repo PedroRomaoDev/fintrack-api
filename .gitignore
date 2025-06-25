@@ -11,3 +11,5 @@ node_modules
 
 # Test Coverage
 coverage
+
+.env.test
