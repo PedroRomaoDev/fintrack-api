@@ -1,4 +1,4 @@
-// import { UnauthorizedError } from '../../errors/index.js';
+import { UnauthorizedError } from '../../errors/index.js';
 import { RefreshTokenController } from './refresh-token';
 
 describe('RefreshTokenController', () => {
@@ -37,5 +37,20 @@ describe('RefreshTokenController', () => {
         };
         const response = await sut.execute(httpRequest);
         expect(response.statusCode).toBe(200);
+    });
+    it('should return 401 if use case throws UnauthorizedError', async () => {
+        const { sut, refreshTokenUseCase } = makeSut();
+        jest.spyOn(refreshTokenUseCase, 'execute').mockImplementationOnce(
+            () => {
+                throw new UnauthorizedError();
+            },
+        );
+        const httpRequest = {
+            body: {
+                refreshToken: '1',
+            },
+        };
+        const response = await sut.execute(httpRequest);
+        expect(response.statusCode).toBe(401);
     });
 });
