@@ -46,9 +46,34 @@ export const createTransactionSchema = z.object({
         ),
 });
 
+// export const updateTransactionSchema = createTransactionSchema
+//     .omit({ user_id: true })
+//     .partial();
+
 export const updateTransactionSchema = createTransactionSchema
-    .omit({ user_id: true })
-    .partial()
-    .strict({
-        message: 'Some provided field is not allowed',
-    });
+    .omit({
+        user_id: true,
+    })
+    .partial();
+
+export const getTransactionsByUserIdSchema = z.object({
+    user_id: z
+        .string({
+            required_error: 'User ID is required.',
+        })
+        .uuid({
+            message: 'User ID must be a valid UUID',
+        }),
+    from: z
+        .string()
+        .date({
+            message: 'From date must be a valid date.',
+        })
+        .optional(),
+    to: z
+        .string()
+        .date({
+            message: 'To date must be a valid date.',
+        })
+        .optional(),
+});
