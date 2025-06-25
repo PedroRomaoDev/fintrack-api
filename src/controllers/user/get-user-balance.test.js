@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 import { GetUserBalanceController } from './get-user-balance.js';
 // import { UserNotFoundError } from '../../errors/user.js';
 
-describe('GetUserBalance', () => {
+describe('Get User Balance Controller', () => {
     class GetUserBalanceUseCaseStub {
         async execute() {
             return faker.number.int();
@@ -35,5 +35,21 @@ describe('GetUserBalance', () => {
 
         // assert
         expect(result.statusCode).toBe(200);
+    });
+    it('should return 400 when userId is invalid', async () => {
+        // arrange
+        const { sut } = makeSut();
+
+        // act
+        const result = await sut.execute({
+            params: { userId: 'invalid_id' },
+            query: {
+                from: '2024-01-01',
+                to: '2024-12-31',
+            },
+        });
+
+        // assert
+        expect(result.statusCode).toBe(400);
     });
 });
