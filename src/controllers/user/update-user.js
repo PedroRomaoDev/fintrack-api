@@ -1,6 +1,14 @@
 import validator from 'validator';
-import { badRequest, ok, serverError } from '../helpers/index.js';
-import { EmailAlreadyInUseError } from '../../errors/user.js';
+import {
+    badRequest,
+    ok,
+    serverError,
+    userNotFoundResponse,
+} from '../helpers/index.js';
+import {
+    EmailAlreadyInUseError,
+    UserNotFoundError,
+} from '../../errors/user.js';
 import { invalidIdResponse } from '../helpers/index.js';
 import { updateUserSchema } from '../../schemas/user.js';
 import { ZodError } from 'zod';
@@ -37,6 +45,9 @@ export class UpdateUserController {
             }
             if (error instanceof EmailAlreadyInUseError) {
                 return badRequest({ message: error.message });
+            }
+            if (error instanceof UserNotFoundError) {
+                return userNotFoundResponse();
             }
 
             console.error(error);
