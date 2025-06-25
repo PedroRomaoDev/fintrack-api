@@ -1,14 +1,14 @@
 import {
     CreateTransactionController,
-    UpdateTransactionController,
     DeleteTransactionController,
     GetTransactionsByUserIdController,
+    UpdateTransactionController,
 } from '../../controllers';
 import {
     makeCreateTransactionController,
-    makeUpdateTransactionController,
     makeDeleteTransactionController,
     makeGetTransactionsByUserIdController,
+    makeUpdateTransactionController,
 } from './transaction';
 
 describe('Transaction Controller Factories', () => {
@@ -17,16 +17,19 @@ describe('Transaction Controller Factories', () => {
             CreateTransactionController,
         );
     });
+
     it('should return a valid UpdateTransactionController instance', () => {
         expect(makeUpdateTransactionController()).toBeInstanceOf(
             UpdateTransactionController,
         );
     });
+
     it('should return a valid DeleteTransactionController instance', () => {
         expect(makeDeleteTransactionController()).toBeInstanceOf(
             DeleteTransactionController,
         );
     });
+
     it('should return a valid GetTransactionsByUserIdController instance', () => {
         expect(makeGetTransactionsByUserIdController()).toBeInstanceOf(
             GetTransactionsByUserIdController,
