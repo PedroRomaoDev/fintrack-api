@@ -28,8 +28,8 @@ export class LoginUserUseCase {
 
         // depois, gerar os tokens
         return {
-            ...user,
-            tokens: this.tokenGeneratorAdapter.execute(user.id),
+            user: user,
+            tokens: await this.tokenGeneratorAdapter.execute(user.id),
         };
     }
 }
