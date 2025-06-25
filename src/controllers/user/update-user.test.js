@@ -44,4 +44,20 @@ describe('UpdateUserController', () => {
         // assert
         expect(result.statusCode).toBe(200);
     });
+    it('should return 400 when invalid email is provided', async () => {
+        // arrange
+        const { sut } = makeSut();
+
+        // act
+        const result = await sut.execute({
+            params: httpRequest.params,
+            body: {
+                ...httpRequest,
+                email: 'invalid_email',
+            },
+        });
+
+        // assert
+        expect(result.statusCode).toBe(400);
+    });
 });
