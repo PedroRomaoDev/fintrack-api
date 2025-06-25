@@ -35,4 +35,19 @@ describe('CreateTransactionController', () => {
         // assert
         expect(result.statusCode).toBe(201);
     });
+    it('should return 201 when creating transaction succesfully {earning}', async () => {
+        // arrange
+        const { sut } = makeSut();
+
+        // act
+        const result = await sut.execute({
+            body: {
+                ...baseHttpRequest.body,
+                type: 'EARNING',
+            },
+        });
+
+        // assert
+        expect(result.statusCode).toBe(201);
+    });
 });
